@@ -38,11 +38,66 @@ checkMaxString('Текст сообщения', 50);
 
 
 const ID = [
-  getRandomIntInclusive(1, 25),
+  //не знаю как сделать такб чтобы ID не повторялись. Поэтому указала цифрами от 1 до 25. Через getRandomIntInclusive(1, 25)
+  // цифры повторяются.
+  // getRandomIntInclusive(1, 25),
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
+  '13',
+  '14',
+  '15',
+  '16',
+  '17',
+  '18',
+  '19',
+  '20',
+  '21',
+  '22',
+  '23',
+  '24',
+  '25'
+
 ];
 const URL = [
-  `photos/${ getRandomIntInclusive(1, 25) }.jpg`
+//   `photos/${ getRandomIntInclusive(1, 25) }.jpg` тут тоже цифры повторяются.
+// ];
+  'photos/1.jpg',
+  'photos/2.jpg',
+  'photos/3.jpg',
+  'photos/4.jpg',
+  'photos/5.jpg',
+  'photos/6.jpg',
+  'photos/7.jpg',
+  'photos/8.jpg',
+  'photos/9.jpg',
+  'photos/10.jpg',
+  'photos/11.jpg',
+  'photos/12.jpg',
+  'photos/13.jpg',
+  'photos/14.jpg',
+  'photos/15.jpg',
+  'photos/16.jpg',
+  'photos/17.jpg',
+  'photos/18.jpg',
+  'photos/19.jpg',
+  'photos/20.jpg',
+  'photos/21.jpg',
+  'photos/22.jpg',
+  'photos/23.jpg',
+  'photos/24.jpg',
+  'photos/25.jpg',
 ];
+
 const DESCRIPTION = [
   'кот',
   'собака',
@@ -78,34 +133,11 @@ const COMMENTS = [
   getRandomIntInclusive(0, 200),
 ];
 
-const SIMILAR_WIZARD_COUNT = 4;
 
-const getRandomPositiveInteger = (a, b) => {
-  if (a < 0 || b < 0) {
-    return NaN;
-  }
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+const SIMILAR_PHOTO_COUNTER = 4;
 
-// const createWizard = () => {
-//   const randomIDIndex = getRandomPositiveInteger(0, ID.length - 1);
-//   const randomURLIndex = getRandomPositiveInteger(0, URL.length - 1);
-//   const randomDESCRIPTIONIndex = getRandomPositiveInteger(0, DESCRIPTION.length - 1);
-//   const randomLIKESIndex = getRandomPositiveInteger(0, LIKES.length - 1);
-//   const randomCOMMENTSIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
-//   return {
-//     id: ID[randomIDIndex],
-//     url: URL[randomURLIndex],
-//     description: DESCRIPTION[randomDESCRIPTIONIndex],
-//     likes: LIKES[randomLIKESIndex],
-//     comments: COMMENTS[randomCOMMENTSIndex]
-//   };
-// };
 
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 const object = () => ({
   id: getRandomArrayElement (ID),
   url: getRandomArrayElement (URL),
@@ -114,6 +146,6 @@ const object = () => ({
   comments: getRandomArrayElement (COMMENTS),
 });
 
-const similarWizards = Array.from({length: SIMILAR_WIZARD_COUNT}, object);
+const photoVariety = Array.from({length: SIMILAR_PHOTO_COUNTER}, object);
 
-console.log(similarWizards);
+console.log(photoVariety);
