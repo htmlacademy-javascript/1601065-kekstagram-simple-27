@@ -34,69 +34,17 @@ checkMaxString('Текст сообщения', 50);
 
 
 //Больше деталий (название задания)
-// Обьект состоит из пяти ключей (ID, URL, DESCRIPTION,LIKES, COMMENTS)
 
 
-const ID = [
-  //не знаю как сделать такб чтобы ID не повторялись. Поэтому указала цифрами от 1 до 25. Через getRandomIntInclusive(1, 25)
-  // цифры повторяются.
-  // getRandomIntInclusive(1, 25),
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
-  '13',
-  '14',
-  '15',
-  '16',
-  '17',
-  '18',
-  '19',
-  '20',
-  '21',
-  '22',
-  '23',
-  '24',
-  '25'
+const LIKES_COUNT = {
+  MIN: 15,
+  MAX: 200,
+};
 
-];
-const URL = [
-//   `photos/${ getRandomIntInclusive(1, 25) }.jpg` тут тоже цифры повторяются.
-// ];
-  'photos/1.jpg',
-  'photos/2.jpg',
-  'photos/3.jpg',
-  'photos/4.jpg',
-  'photos/5.jpg',
-  'photos/6.jpg',
-  'photos/7.jpg',
-  'photos/8.jpg',
-  'photos/9.jpg',
-  'photos/10.jpg',
-  'photos/11.jpg',
-  'photos/12.jpg',
-  'photos/13.jpg',
-  'photos/14.jpg',
-  'photos/15.jpg',
-  'photos/16.jpg',
-  'photos/17.jpg',
-  'photos/18.jpg',
-  'photos/19.jpg',
-  'photos/20.jpg',
-  'photos/21.jpg',
-  'photos/22.jpg',
-  'photos/23.jpg',
-  'photos/24.jpg',
-  'photos/25.jpg',
-];
+const COMMENTS_COUNT = {
+  MIN: 0,
+  MAX: 200,
+};
 
 const DESCRIPTION = [
   'кот',
@@ -125,25 +73,29 @@ const DESCRIPTION = [
   'вода',
   'земля',
 ];
-const LIKES = [
-  getRandomIntInclusive(15, 200),
-];
 
-const COMMENTS = [
-  getRandomIntInclusive(0, 200),
-];
+//массив случайной длины из значений, значения не повторяются
+function getListElements(counter) {
+  const newArray = [];
+  for (let i = 1; i <= counter; i++) {
+    const newElem = i;
+    newArray.push(newElem);
+  }
+  return newArray;
+}
 
+const ARRAY_OF_OBJECTS = getListElements(25);
 
 const SIMILAR_PHOTO_COUNTER = 4;
 
 
 const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 const object = () => ({
-  id: getRandomArrayElement (ID),
-  url: getRandomArrayElement (URL),
+  id: getRandomArrayElement(ARRAY_OF_OBJECTS),
+  url: `photos/${getRandomArrayElement(ARRAY_OF_OBJECTS)}.jpg`,
   description: getRandomArrayElement (DESCRIPTION),
-  likes: getRandomArrayElement (LIKES),
-  comments: getRandomArrayElement (COMMENTS),
+  likes: getRandomIntInclusive(LIKES_COUNT.MIN, LIKES_COUNT.MAX),
+  comments: getRandomIntInclusive(COMMENTS_COUNT.MIN, COMMENTS_COUNT.MAX),
 });
 
 const photoVariety = Array.from({length: SIMILAR_PHOTO_COUNTER}, object);
