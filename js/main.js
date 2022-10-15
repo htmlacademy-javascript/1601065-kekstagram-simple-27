@@ -33,8 +33,7 @@ function checkMaxString(line, maxlength) {
 checkMaxString('Текст сообщения', 50);
 
 
-//Больше деталий (название задания)
-
+//Больше деталий (название задания) 4 раздел
 
 const LIKES_COUNT = {
   MIN: 15,
@@ -85,7 +84,6 @@ function getListElements(counter) {
 }
 
 const ARRAY_OF_OBJECTS = getListElements(25);
-
 const SIMILAR_PHOTO_COUNTER = 4;
 
 
