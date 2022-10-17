@@ -18,7 +18,6 @@ function getRandomIntInclusive(min, max) {
 
 }
 
-
 getRandomIntInclusive(1, 25);
 
 
@@ -70,7 +69,7 @@ const DESCRIPTION = [
   'стакан',
   'камень',
   'вода',
-  'земля',
+  'трава',
 ];
 
 //массив случайной длины из значений, значения не повторяются
