@@ -5,5 +5,4 @@ import { photoVariety } from './data.js';
 // console.log (
 //   photoVariety()
 // );
-
 photoVariety();
