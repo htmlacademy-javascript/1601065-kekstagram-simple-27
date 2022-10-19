@@ -45,7 +45,7 @@ const DESCRIPTIONS = [
 
 
 const ARRAY_OF_OBJECTS = getListElements(25);
-const SIMILAR_PHOTO_COUNTER = 4;
+const SIMILAR_PHOTO_COUNTER = 25;
 
 
 const object = () => ({

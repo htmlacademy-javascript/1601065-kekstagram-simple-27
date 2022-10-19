@@ -12,7 +12,7 @@ const similarListFragment = document.createDocumentFragment();
 const similarPhotos = photoVariety();
 
 
-similarPhotos.forEach((url, comments, likes) => {
+similarPhotos.forEach(({url, comments, likes}) => {
   const photosElement = similarWizardPhotos.cloneNode(true);
   photosElement.querySelector('.picture__img').src = url;
   photosElement.querySelector('.picture__comments').textContent = comments;
