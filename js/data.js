@@ -58,3 +58,4 @@ const object = () => ({
 
 const photoVariety = () => Array.from({length: SIMILAR_PHOTO_COUNTER}, object);
 export {photoVariety};
+
