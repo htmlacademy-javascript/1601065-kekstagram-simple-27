@@ -1,7 +1,7 @@
 import { photoVariety } from './data.js';
 
 const userPhotos = document.querySelector('.pictures__title');
-userPhotos.classList.remove('visually-hidden');
+// userPhotos.classList.remove('visually-hidden');
 
 
 const similarWizardPhotos = document.querySelector('#picture')
