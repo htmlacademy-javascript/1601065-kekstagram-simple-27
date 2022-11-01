@@ -1,16 +1,17 @@
 import { photoVariety } from './data.js';
 
 const userPhotos = document.querySelector('.pictures__title');
-userPhotos.classList.remove('visually-hidden');
+// userPhotos.classList.remove('visually-hidden');
 
 
 const similarWizardPhotos = document.querySelector('#picture')
   .content
   .querySelector('.picture');
-const similarListFragment = document.createDocumentFragment();
 
 const similarPhotos = photoVariety();
 
+
+const similarListFragment = document.createDocumentFragment();
 
 similarPhotos.forEach(({url, comments, likes}) => {
   const photosElement = similarWizardPhotos.cloneNode(true);
@@ -21,3 +22,9 @@ similarPhotos.forEach(({url, comments, likes}) => {
 });
 
 document.querySelector('.pictures').appendChild(similarListFragment);
+
+const clearSimilarList = () => {
+  userPhotos.innerHTML = '';
+};
+
+export {clearSimilarList};
