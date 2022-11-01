@@ -1,7 +1,7 @@
 //Изменение размера изображения
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
-const imgPreview = document.querySelector('.img-upload__preview img');
+const imgPreview = document.querySelector('.img-upload__preview');
 const input = document.querySelector('input[name="scale"]');
 const maxScale = 100;
 const minScale = 25;
