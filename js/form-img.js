@@ -2,6 +2,7 @@
 import { isEscapeKey } from './data.js';
 import { clearSimilarList } from './picture.js';
 
+
 const imageForm = document.querySelector('.img-upload__overlay ');
 imageForm.classList.remove('hidden');
 // const body = document.querySelector('body');
@@ -12,7 +13,7 @@ const userModalOpenElement = document.querySelector('#upload-file');
 const userModalCloseElement = imageForm.querySelector('#upload-cancel');
 
 
-const onPopupEscKeydown = (evt) => {
+const onModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUserModal();
@@ -22,23 +23,25 @@ const onPopupEscKeydown = (evt) => {
 function openUserModal () {
   imageForm.classList.remove('hidden');
 
-  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('keydown', onModalEscKeydown);
 }
 
 function closeUserModal () {
   imageForm.classList.add('hidden');
   clearSimilarList();
 
-  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.removeEventListener('keydown', onModalEscKeydown);
 }
 
 userModalOpenElement.addEventListener('click', () => {
   openUserModal();
+
 });
 
 userModalOpenElement.addEventListener('keydown', (evt) => {
   if (isEscapeKey(evt)) {
     openUserModal();
+
   }
 });
 

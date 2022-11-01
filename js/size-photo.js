@@ -1,20 +1,21 @@
 //Изменение размера изображения
-
-function removeLastChar (str) {
-  return str ? str.slice(0 , -1) : str;
-}
-
-function toNumber (str) {
-  return Number(str);
-}
-
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
-const imgPreview = document.querySelector('.img-upload__preview');
+const imgPreview = document.querySelector('.img-upload__preview img');
 const input = document.querySelector('input[name="scale"]');
 const maxScale = 100;
 const minScale = 25;
 const step = 25;
+
+
+function removeLastChar (string) {
+  return string ? string.slice(0,-1) : string;
+}
+
+
+function toNumber (string) {
+  return Number(string);
+}
 
 scaleControlBigger.addEventListener('click', () => {
   const currentValue = input.value;
