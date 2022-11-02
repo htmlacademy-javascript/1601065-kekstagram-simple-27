@@ -1,36 +1,43 @@
 //открытие и закрытие модального окна
-import { isEscapeKey } from './data.js';
-import { clearSimilarList } from './picture.js';
 
-const imgPreview = document.querySelector('.img-upload__preview');
-const imageForm = document.querySelector('.img-upload__overlay ');
-imageForm.classList.remove('hidden');
+const form = document.querySelector('.img-upload__form');
+const inputFileUpload = form.querySelector('#upload-file');
+const imgUploadOverlay = form.querySelector('.img-upload__overlay');
+const buttonUploatCancel = form.querySelector('#upload-cancel');
+const imgUploadSubmit = form.querySelector('.img-upload__submit');
+const imgUploadPreview = document.querySelector('.img-upload__preview');
+const img = imgUploadPreview.querySelector('img');
 
+function onImgEditorOpen () {
+  imgUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onImgEditorCloseKeydownEscape);
+}
 
-const userModalOpenElement = document.querySelector('#upload-file');
-const userModalCloseElement = imageForm.querySelector('#upload-cancel');
+function onImgEditorClose () {
+  imgUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  img.style.transform = `scale(${1})`;
+  inputFileUpload.value = '';
+  document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
+}
 
-
-const onModalEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+function onImgEditorCloseKeydownEscape (evt) {
+  if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeUserModal();
+    onImgEditorClose();
+    document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
   }
-};
-
-function openUserModal () {
-  imageForm.classList.remove('hidden');
-  document.addEventListener('keydown', onModalEscKeydown);
-  imgPreview.style.transform = `scale(${1})`;
 }
 
-
-function closeUserModal () {
-  imageForm.classList.add('hidden');
-  clearSimilarList();
-  document.removeEventListener('keydown', onModalEscKeydown);
-
+function onImgUploadSubmitDisabled () {
+  imgUploadSubmit.setAttribute('disabled', 'disabled');
 }
 
-userModalOpenElement.addEventListener('click', openUserModal);
-userModalCloseElement.addEventListener('click', closeUserModal);
+inputFileUpload.addEventListener('change', onImgEditorOpen);
+
+buttonUploatCancel.addEventListener('click', onImgEditorClose);
+
+document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
+
+form.addEventListener('submit', onImgUploadSubmitDisabled);
