@@ -1,4 +1,4 @@
-//открытие и закрытие модального окна
+// открытие и закрытие модального окна
 
 const form = document.querySelector('.img-upload__form');
 const inputFileUpload = form.querySelector('#upload-file');
@@ -41,3 +41,5 @@ buttonUploatCancel.addEventListener('click', onImgEditorClose);
 document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
 
 form.addEventListener('submit', onImgUploadSubmitDisabled);
+
+export {onImgEditorOpen, onImgEditorClose};
