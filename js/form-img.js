@@ -7,6 +7,21 @@ const buttonUploatCancel = form.querySelector('#upload-cancel');
 const imgUploadSubmit = form.querySelector('.img-upload__submit');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
 const img = imgUploadPreview.querySelector('img');
+const scaleControlValue = document.querySelector('.scale__control--value');
+const effectNone = document.querySelector('input[type="radio"][value="none"]');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const comment = document.querySelector('.text__description');
+
+
+function formImgUploadReset () {
+  scaleControlValue.value = `${100}%`;
+  img.style.removeProperty('filter');
+  img.removeAttribute('class');
+  effectNone.checked = true;
+  sliderContainer.style.display = 'none';
+  comment.value = '';
+}
+
 
 function onImgEditorOpen () {
   imgUploadOverlay.classList.remove('hidden');
@@ -19,6 +34,7 @@ function onImgEditorClose () {
   document.body.classList.remove('modal-open');
   img.style.transform = `scale(${1})`;
   inputFileUpload.value = '';
+  formImgUploadReset();
   document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
 }
 

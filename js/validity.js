@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-
 import { showAlert } from './util.js';
+import { onImgEditorClose } from './form-img.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 
@@ -36,6 +35,7 @@ const setUserFormSubmit = (onSuccess) => {
           showAlert('Не удалось отправить форму. Попробуйте ещё раз');
         });
     }
+    onImgEditorClose();
   });
 };
 
