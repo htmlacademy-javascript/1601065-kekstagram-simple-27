@@ -60,14 +60,18 @@
 
 // export {onImgEditorOpen, onImgEditorClose};
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+import { initializeSlider } from './initialize-slider.js';
+import { sliderIntensityEffectElement } from './initialize-slider.js';
+import { isEscapeKey } from './util.js';
+
+
 const fileInputElement = document.querySelector('.img-upload__input');
 const popupImgElement = document.querySelector('.img-upload__overlay');
 const btnHidePopupElement = document.querySelector('#upload-cancel');
 const scaleValueElement = document.querySelector('.scale__control--value');
 const imgPreviewElement = document.querySelector('.img-upload__preview img');
 const previewEffectsInputElement = document.querySelectorAll('.effects__radio');
-const sliderIntensityEffectElement = document.querySelector('.effect-level__slider');
+
 const sliderContainerElement = document.querySelector('.effect-level');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
 const textDescriptionElement = document.querySelector('.text__description');
@@ -75,31 +79,6 @@ const textDescriptionElement = document.querySelector('.text__description');
 const scaleValueTetx = scaleValueElement.value;
 // import{initializeSlider} from './photo-filters.js';
 
-const initializeSlider = () => {
-  noUiSlider.create(sliderIntensityEffectElement, {
-    range: {
-      'min': 0,
-      'max': 1,
-    },
-    start: 1,
-    step: .1,
-    connect: 'lower',
-    keyboardSupport: true,
-    format: {
-      to: function (value) {
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
-      },
-      from: function (value) {
-        return parseFloat(value);
-      },
-    }
-  });
-};
-
-export { initializeSlider };
 
 function closePopupEscKeydown (evt) {
   if (isEscapeKey(evt)) {
