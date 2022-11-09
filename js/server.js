@@ -19,25 +19,46 @@ const getData = (onSuccess) => {
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
-  fetch(
-    URL_SERVER,
-    {
-      method: 'POST',
-      body,
-      'Content-Type': 'multipart/form-data'
-    },
-  )
-    .then((response) => {
-      if (response.ok) {
-        onSuccess();
-      } else {
-        onFail();
-      }
-    })
-    .catch(() => {
-      onFail();
-    });
+const sendData = async (onSuccess, onFail, body) => {
+  try{
+    const response = await fetch(
+      'https://27.javascript.pages.academy/kekstagram-simple',
+      {
+        method: 'POST',
+        body,
+      },
+    );
+    if(!response.ok) {
+      throw new Error('Не удалось отправить форму.Попробуйте еще раз');
+    }
+
+    onSuccess();
+  }
+  catch(error) {
+    onFail(error.message);
+  }
 };
 
+
+// const sendData = (onSuccess, onFail, body) => {
+//   fetch(
+//     URL_SERVER,
+//     {
+//       method: 'POST',
+//       body,
+//     },
+//   )
+//     .then((response) => {
+//       if (response.ok) {
+//         onSuccess();
+//       } else {
+//         onFail();
+//       }
+//     })
+//     .catch(() => {
+//       onFail();
+//     });
+// };
+
 export { getData, sendData };
+
