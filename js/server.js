@@ -1,4 +1,4 @@
-const URL_SERVER = 'https://27.javascript.pages.academy/kekstagram-simple' ;
+const URL_SERVER = 'https://27.javascript.pages.academy/kekstagram-simple';
 const URL_PHOTOS = `${URL_SERVER}/data`;
 import { showAlert } from './show-alert.js';
 
@@ -22,7 +22,7 @@ const getData = (onSuccess) => {
 const sendData = async (onSuccess, onFail, body) => {
   try{
     const response = await fetch(
-      'https://27.javascript.pages.academy/kekstagram-simple',
+      URL_SERVER,
       {
         method: 'POST',
         body,
@@ -40,25 +40,4 @@ const sendData = async (onSuccess, onFail, body) => {
 };
 
 
-// const sendData = (onSuccess, onFail, body) => {
-//   fetch(
-//     URL_SERVER,
-//     {
-//       method: 'POST',
-//       body,
-//     },
-//   )
-//     .then((response) => {
-//       if (response.ok) {
-//         onSuccess();
-//       } else {
-//         onFail();
-//       }
-//     })
-//     .catch(() => {
-//       onFail();
-//     });
-// };
-
 export { getData, sendData };
-

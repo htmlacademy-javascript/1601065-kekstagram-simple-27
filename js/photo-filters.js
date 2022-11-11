@@ -132,4 +132,3 @@ function onEffectChange (evt) {
 effectsList.addEventListener('change', onEffectChange);
 
 export{slider, onEffectChange};
-

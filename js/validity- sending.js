@@ -1,53 +1,10 @@
-/* eslint-disable no-shadow */
-// import { showAlert } from './util.js';
-// import { onImgEditorClose } from './form-img.js';
-
-// const photoForm = document.querySelector('.img-upload__form');
-
-// const pristine = new Pristine(photoForm,{
-//   classTo: 'img-upload__text text',
-//   errorTextParent: 'img-upload__text text',
-//   errorTextClass: 'img-upload__text text',
-// });
-
-// const setUserFormSubmit = (onSuccess) => {
-//   photoForm.addEventListener('submit', (evt) => {
-//     evt.preventDefault();
-
-//     const isValid = pristine.validate();
-
-//     if (isValid) {
-//       const formData = new FormData(evt.target);
-
-//       fetch(
-//         'https://27.javascript.pages.academy/kekstagram-simple/data',
-//         {
-//           method: 'POST',
-//           body: formData,
-//         },
-//       ).then((response) => {
-//         if (response.ok) {
-//           onSuccess();
-//           onImgEditorClose();
-//         } else {
-//           showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-//         }
-//       })
-//         .catch(() => {
-//           showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-//         });
-//     }
-//   });
-// };
-
-// export{setUserFormSubmit};
-import { closePopupEscKeydown } from './form-img.js';
+import { closeModalEscKeydown } from './form-img.js';
 import { sendData } from './server.js';
-import { isEscapeKey } from './form-img.js';
+import { isEscapeKey } from './util.js';
 
 
 const formElement = document.getElementById('upload-select-image');
-const btnSubmitElement = document.querySelector('.img-upload__submit');
+const buttonSubmitElement = document.querySelector('.img-upload__submit');
 const messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
 const messageErrorTemplateElement = document.querySelector('#error').content.querySelector('.error');
 const bodyElement = document.body;
@@ -60,13 +17,13 @@ const pristine = new Pristine(formElement, {
 }, false);
 
 const blockSubmitButton = () => {
-  btnSubmitElement.disabled = true;
-  btnSubmitElement.textContent = 'Публикация...';
+  buttonSubmitElement.disabled = true;
+  buttonSubmitElement.textContent = 'Публикация...';
 };
 
 const unblockSubmitButton = () => {
-  btnSubmitElement.disabled = false;
-  btnSubmitElement.textContent = 'Опубликовать';
+  buttonSubmitElement.disabled = false;
+  buttonSubmitElement.textContent = 'Опубликовать';
 };
 
 function getSuccessMesage() {
@@ -112,7 +69,7 @@ function getSuccessMesage() {
 
 
 function getErrorMesage() {
-  document.removeEventListener('keydown', closePopupEscKeydown);
+  document.removeEventListener('keydown', closeModalEscKeydown);
 
   const fragment = new DocumentFragment();
   const clonedMessageErrorTemplate = messageErrorTemplateElement.cloneNode(true);
@@ -130,7 +87,7 @@ function getErrorMesage() {
       document.removeEventListener('keydown', onMesageEscKeydown);
 
       document.removeEventListener('click', onMesageDocument);
-      document.addEventListener('keydown', closePopupEscKeydown);
+      document.addEventListener('keydown', closeModalEscKeydown);
     }
   };
   document.addEventListener('keydown', onMesageEscKeydown);
@@ -141,7 +98,7 @@ function getErrorMesage() {
       errorElement.remove();
       document.removeEventListener('keydown', onMesageEscKeydown);
       document.removeEventListener('click', onMesageDocument);
-      document.addEventListener('keydown', closePopupEscKeydown);
+      document.addEventListener('keydown', closeModalEscKeydown);
     }
   }
 
@@ -152,7 +109,7 @@ function getErrorMesage() {
     errorElement.remove();
     document.removeEventListener('keydown', onMesageEscKeydown);
     document.removeEventListener('click', onMesageDocument);
-    document.addEventListener('keydown', closePopupEscKeydown);
+    document.addEventListener('keydown', closeModalEscKeydown);
   });
 }
 

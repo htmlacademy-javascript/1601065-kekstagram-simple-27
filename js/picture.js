@@ -1,14 +1,7 @@
-// import { photoVariety } from './data.js';  //посмотреть нужно это?
-
 const userPhotos = document.querySelector('.pictures__title');
-// userPhotos.classList.remove('visually-hidden');
-
-
 const similarWizardPhotos = document.querySelector('#picture')
   .content
   .querySelector('.picture');
-
-// const similarPhotos = photoVariety();
 
 const renderSimilarList = (similarPhotos) => {
   const similarListFragment = document.createDocumentFragment();
