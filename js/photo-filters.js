@@ -31,6 +31,7 @@ noUiSlider.create(slider, {
   },
 });
 
+
 slider.noUiSlider.on('update', () => {
   sliderValue.value = slider.noUiSlider.get();
 
@@ -127,4 +128,7 @@ function onEffectChange (evt) {
   }
 }
 
+
 effectsList.addEventListener('change', onEffectChange);
+
+export{slider, onEffectChange};

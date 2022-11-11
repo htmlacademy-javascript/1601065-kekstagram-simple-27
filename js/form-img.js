@@ -1,43 +1,68 @@
-//открытие и закрытие модального окна
+import { initializeSlider } from './initialize-slider.js';
+import { sliderIntensityEffectElement } from './initialize-slider.js';
+import { isEscapeKey } from './util.js';
 
-const form = document.querySelector('.img-upload__form');
-const inputFileUpload = form.querySelector('#upload-file');
-const imgUploadOverlay = form.querySelector('.img-upload__overlay');
-const buttonUploatCancel = form.querySelector('#upload-cancel');
-const imgUploadSubmit = form.querySelector('.img-upload__submit');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
-const img = imgUploadPreview.querySelector('img');
 
-function onImgEditorOpen () {
-  imgUploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onImgEditorCloseKeydownEscape);
-}
+const fileInputElement = document.querySelector('.img-upload__input');
+const modalImgElement = document.querySelector('.img-upload__overlay');
+const hideModalElement = document.querySelector('#upload-cancel');
+const scaleValueElement = document.querySelector('.scale__control--value');
+const imgPreviewElement = document.querySelector('.img-upload__preview img');
+const previewEffectsInputElement = document.querySelectorAll('.effects__radio');
+const sliderContainerElement = document.querySelector('.effect-level');
+const effectLevelValueElement = document.querySelector('.effect-level__value');
+const textDescriptionElement = document.querySelector('.text__description');
+const scaleValueTetx = scaleValueElement.value;
 
-function onImgEditorClose () {
-  imgUploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  img.style.transform = `scale(${1})`;
-  inputFileUpload.value = '';
-  document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
-}
 
-function onImgEditorCloseKeydownEscape (evt) {
-  if (evt.key === 'Escape') {
+function closeModalEscKeydown (evt) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
-    onImgEditorClose();
-    document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
+    closeModal();
   }
 }
 
-function onImgUploadSubmitDisabled () {
-  imgUploadSubmit.setAttribute('disabled', 'disabled');
+function closeModalDocument (evt) {
+  if (evt.target === modalImgElement) {
+    evt.preventDefault();
+    closeModal();
+  }
 }
 
-inputFileUpload.addEventListener('change', onImgEditorOpen);
+function closeModal () {
+  document.body.classList.remove('modal-open');
+  modalImgElement.classList.add('hidden');
+  document.removeEventListener('keydown', closeModalEscKeydown);
+  document.removeEventListener('click', closeModalDocument);
 
-buttonUploatCancel.addEventListener('click', onImgEditorClose);
+  textDescriptionElement.value = '';
+  fileInputElement.value = '';
+  scaleValueElement.value = scaleValueTetx;
+  imgPreviewElement.removeAttribute('class');
+  imgPreviewElement.removeAttribute('style');
+  effectLevelValueElement.value = '';
+  sliderContainerElement.hidden = true;
+  sliderIntensityEffectElement.noUiSlider.destroy();
+  initializeSlider();
+  previewEffectsInputElement[0].checked = true;
+}
 
-document.removeEventListener('keydown', onImgEditorCloseKeydownEscape);
+function openModal () {
+  modalImgElement.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 
-form.addEventListener('submit', onImgUploadSubmitDisabled);
+  document.addEventListener('keydown', closeModalEscKeydown);
+  document.addEventListener('click', closeModalDocument);
+}
+
+fileInputElement.addEventListener('change', (evt) => {
+  evt.preventDefault();
+  openModal();
+});
+
+hideModalElement.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  closeModal();
+});
+
+export { closeModal, openModal, closeModalEscKeydown, isEscapeKey };

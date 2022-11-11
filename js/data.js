@@ -2,9 +2,6 @@ import { getRandomArrayElement } from './util.js';
 import {getRandomIntInclusive} from './util.js';
 import { getListElements } from './util.js';
 
-
-//Больше деталий (название задания) 4 раздел
-
 const LIKES_COUNT = {
   MIN: 15,
   MAX: 200,
@@ -43,11 +40,8 @@ const DESCRIPTIONS = [
   'земля',
 ];
 
-
 const ARRAY_OF_OBJECTS = getListElements(25);
 const SIMILAR_PHOTO_COUNTER = 25;
-
-
 const object = () => ({
   id: getRandomArrayElement(ARRAY_OF_OBJECTS),
   url: `photos/${getRandomArrayElement(ARRAY_OF_OBJECTS)}.jpg`,
@@ -57,6 +51,5 @@ const object = () => ({
 });
 
 const photoVariety = () => Array.from({length: SIMILAR_PHOTO_COUNTER}, object);
-const isEscapeKey = (evt) => evt.key === 'Escape';
-export {photoVariety, isEscapeKey};
 
+export {photoVariety};
