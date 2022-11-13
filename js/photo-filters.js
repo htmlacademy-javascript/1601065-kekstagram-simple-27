@@ -30,29 +30,31 @@ noUiSlider.create(slider, {
   },
 });
 
+effectsList.addEventListener('change', () => {
+  slider.noUiSlider.on('update', () => {
+    sliderValue.value = slider.noUiSlider.get();
 
-slider.noUiSlider.on('update', () => {
-  sliderValue.value = slider.noUiSlider.get();
+    if (effectsInputRadio[1].checked) {
+      img.style.filter = `grayscale(${sliderValue.value})`;
+    }
 
-  if (effectsInputRadio[1].checked) {
-    img.style.filter = `grayscale(${sliderValue.value})`;
-  }
+    if (effectsInputRadio[2].checked) {
+      img.style.filter = `sepia(${sliderValue.value})`;
+    }
 
-  if (effectsInputRadio[2].checked) {
-    img.style.filter = `sepia(${sliderValue.value})`;
-  }
+    if (effectsInputRadio[3].checked) {
+      img.style.filter = `invert(${sliderValue.value}%)`;
+    }
 
-  if (effectsInputRadio[3].checked) {
-    img.style.filter = `invert(${sliderValue.value}%)`;
-  }
+    if (effectsInputRadio[4].checked) {
+      img.style.filter = `blur(${sliderValue.value}px)`;
+    }
 
-  if (effectsInputRadio[4].checked) {
-    img.style.filter = `blur(${sliderValue.value}px)`;
-  }
+    if (effectsInputRadio[5].checked) {
+      img.style.filter = `brightness(${sliderValue.value})`;
+    }
 
-  if (effectsInputRadio[5].checked) {
-    img.style.filter = `brightness(${sliderValue.value})`;
-  }
+  });
 });
 
 effectsList.addEventListener('change', (evt) => {
