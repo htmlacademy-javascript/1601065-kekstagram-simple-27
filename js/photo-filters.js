@@ -55,7 +55,7 @@ slider.noUiSlider.on('update', () => {
   }
 });
 
-function onEffectChange (evt) {
+effectsList.addEventListener('change', (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     img.removeAttribute('class');
     img.style.removeProperty('filter');
@@ -123,9 +123,6 @@ function onEffectChange (evt) {
       sliderContainer.style.display = 'block';
     }
   }
-}
+});
 
-
-effectsList.addEventListener('change', onEffectChange);
-
-export{slider, onEffectChange};
+export{slider};
