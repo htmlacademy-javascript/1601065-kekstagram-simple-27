@@ -34,6 +34,10 @@ effectsList.addEventListener('change', () => {
   slider.noUiSlider.on('update', () => {
     sliderValue.value = slider.noUiSlider.get();
 
+    if (effectsInputRadio[0].checked) {
+      effectsList.style.removeProperty('filter');
+    }
+
     if (effectsInputRadio[1].checked) {
       img.style.filter = `grayscale(${sliderValue.value})`;
     }
