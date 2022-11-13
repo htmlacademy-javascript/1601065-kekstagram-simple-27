@@ -5,7 +5,6 @@ const img = imgContainer.querySelector('img');
 const effectsList = document.querySelector('.effects__list');
 const effectsInputRadio = effectsList.querySelectorAll('input[type="radio"]');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
-const scaleControlValue = document.querySelector('.scale__control--value');
 
 sliderValue.value = 100;
 sliderContainer.style.display = 'none';
@@ -62,8 +61,6 @@ function onEffectChange (evt) {
     img.style.removeProperty('filter');
     const classImg = `effects__preview--${evt.target.value}`;
     img.classList.add(classImg);
-    scaleControlValue.value = `${100}%`;
-    img.style.transform = `scale(${1})`;
 
     if (evt.target.value === 'chrome') {
       slider.noUiSlider.updateOptions({
