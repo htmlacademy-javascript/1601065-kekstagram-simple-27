@@ -5,7 +5,6 @@ const img = imgContainer.querySelector('img');
 const effectsList = document.querySelector('.effects__list');
 const effectsInputRadio = effectsList.querySelectorAll('input[type="radio"]');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
-const scaleControlValue = document.querySelector('.scale__control--value');
 
 sliderValue.value = 100;
 sliderContainer.style.display = 'none';
@@ -31,39 +30,43 @@ noUiSlider.create(slider, {
   },
 });
 
+effectsList.addEventListener('change', () => {
+  slider.noUiSlider.on('update', () => {
+    sliderValue.value = slider.noUiSlider.get();
 
-slider.noUiSlider.on('update', () => {
-  sliderValue.value = slider.noUiSlider.get();
+    if (effectsInputRadio[0].checked) {
+      effectsList.style.removeProperty('filter');
+    }
 
-  if (effectsInputRadio[1].checked) {
-    img.style.filter = `grayscale(${sliderValue.value})`;
-  }
+    if (effectsInputRadio[1].checked) {
+      img.style.filter = `grayscale(${sliderValue.value})`;
+    }
 
-  if (effectsInputRadio[2].checked) {
-    img.style.filter = `sepia(${sliderValue.value})`;
-  }
+    if (effectsInputRadio[2].checked) {
+      img.style.filter = `sepia(${sliderValue.value})`;
+    }
 
-  if (effectsInputRadio[3].checked) {
-    img.style.filter = `invert(${sliderValue.value}%)`;
-  }
+    if (effectsInputRadio[3].checked) {
+      img.style.filter = `invert(${sliderValue.value}%)`;
+    }
 
-  if (effectsInputRadio[4].checked) {
-    img.style.filter = `blur(${sliderValue.value}px)`;
-  }
+    if (effectsInputRadio[4].checked) {
+      img.style.filter = `blur(${sliderValue.value}px)`;
+    }
 
-  if (effectsInputRadio[5].checked) {
-    img.style.filter = `brightness(${sliderValue.value})`;
-  }
+    if (effectsInputRadio[5].checked) {
+      img.style.filter = `brightness(${sliderValue.value})`;
+    }
+
+  });
 });
 
-function onEffectChange (evt) {
+effectsList.addEventListener('change', (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     img.removeAttribute('class');
     img.style.removeProperty('filter');
     const classImg = `effects__preview--${evt.target.value}`;
     img.classList.add(classImg);
-    scaleControlValue.value = `${100}%`;
-    img.style.transform = `scale(${1})`;
 
     if (evt.target.value === 'chrome') {
       slider.noUiSlider.updateOptions({
@@ -126,9 +129,6 @@ function onEffectChange (evt) {
       sliderContainer.style.display = 'block';
     }
   }
-}
+});
 
-
-effectsList.addEventListener('change', onEffectChange);
-
-export{slider, onEffectChange};
+export{slider};
