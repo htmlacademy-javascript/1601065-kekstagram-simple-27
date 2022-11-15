@@ -35,8 +35,4 @@ function getListElements(counter) {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
-export {getRandomArrayElement};
-export {getRandomIntInclusive};
-export {checkMaxString};
-export {getListElements};
-export {isEscapeKey};
+export {getRandomArrayElement, getRandomIntInclusive, checkMaxString, getListElements, isEscapeKey};

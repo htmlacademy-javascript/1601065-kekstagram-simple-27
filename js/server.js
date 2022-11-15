@@ -1,6 +1,7 @@
+import { showAlert } from './show-alert.js';
 const URL_SERVER = 'https://27.javascript.pages.academy/kekstagram-simple';
 const URL_PHOTOS = `${URL_SERVER}/data`;
-import { showAlert } from './show-alert.js';
+
 
 const getData = (onSuccess) => {
   fetch(

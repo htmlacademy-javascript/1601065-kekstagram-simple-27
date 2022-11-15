@@ -1,8 +1,6 @@
 import { closeModalEscKeydown } from './form-img.js';
 import { sendData } from './server.js';
 import { isEscapeKey } from './util.js';
-
-
 const formElement = document.getElementById('upload-select-image');
 const buttonSubmitElement = document.querySelector('.img-upload__submit');
 const messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
