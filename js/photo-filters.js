@@ -130,4 +130,4 @@ effectsList.addEventListener('change', (evt) => {
   }
 });
 
-export{slider};
+export{slider, sliderContainer};

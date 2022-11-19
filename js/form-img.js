@@ -1,5 +1,6 @@
-import { initializeSlider, sliderIntensityEffectElement } from './initialize-slider.js';
 import { isEscapeKey } from './util.js';
+import { sliderContainer } from './photo-filters.js';
+
 const fileInputElement = document.querySelector('.img-upload__input');
 const modalImgElement = document.querySelector('.img-upload__overlay');
 const hideModalElement = document.querySelector('#upload-cancel');
@@ -32,6 +33,7 @@ function openModal () {
 
   document.addEventListener('keydown', closeModalEscKeydown);
   document.addEventListener('click', closeModalDocument);
+  sliderContainer.style.display = 'none';
 }
 
 fileInputElement.addEventListener('change', (evt) => {
@@ -57,8 +59,6 @@ function closeModal () {
   imgPreviewElement.removeAttribute('style');
   effectLevelValueElement.value = '';
   sliderContainerElement.hidden = true;
-  sliderIntensityEffectElement.noUiSlider.destroy();
-  initializeSlider();
   previewEffectsInputElement[0].checked = true;
 }
 
