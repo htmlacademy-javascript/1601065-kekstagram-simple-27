@@ -1,13 +1,13 @@
 const userPhotos = document.querySelector('.pictures__title');
-const similarWizardPhotos = document.querySelector('#picture')
+const similarPhotos = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const renderSimilarList = (similarPhotos) => {
+const renderSimilarList = (similarPhoto) => {
   const similarListFragment = document.createDocumentFragment();
 
-  similarPhotos.forEach(({url, comments, likes}) => {
-    const photosElement = similarWizardPhotos.cloneNode(true);
+  similarPhoto.forEach(({url, comments, likes}) => {
+    const photosElement = similarPhotos.cloneNode(true);
     photosElement.querySelector('.picture__img').src = url;
     photosElement.querySelector('.picture__comments').textContent = comments;
     photosElement.querySelector('.picture__likes').textContent = likes;

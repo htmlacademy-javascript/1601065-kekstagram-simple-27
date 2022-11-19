@@ -2,7 +2,7 @@ const message = document.querySelector('#error').content.querySelector('.error')
 const buttonMessageClose = message.querySelector('.error__button');
 const messageBlock = document.querySelector('#error').content.querySelector('.error__inner');
 
-function messageError () {
+function messageErrorShow () {
   document.body.appendChild(message);
 
   function onButtonCloseClick () {
@@ -29,4 +29,4 @@ function messageError () {
   document.addEventListener('keydown', onButtonCloseKeydown);
 }
 
-export {messageError};
+export {messageErrorShow};

@@ -30,7 +30,8 @@ noUiSlider.create(slider, {
   },
 });
 
-effectsList.addEventListener('change', () => {
+
+effectsList.addEventListener('change', (evt) => {
   slider.noUiSlider.on('update', () => {
     sliderValue.value = slider.noUiSlider.get();
 
@@ -59,9 +60,7 @@ effectsList.addEventListener('change', () => {
     }
 
   });
-});
 
-effectsList.addEventListener('change', (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     img.removeAttribute('class');
     img.style.removeProperty('filter');
@@ -131,4 +130,4 @@ effectsList.addEventListener('change', (evt) => {
   }
 });
 
-export{slider};
+export{slider, sliderContainer};
