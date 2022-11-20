@@ -9,7 +9,7 @@ const DEFAULT_SCALE = 25;
 
 const scaleImage = (value = DEFAULT_SCALE) => {
   img.style.transform = `scale(${value / 100})`;
-  scaleInput.value = `${value}`;
+  scaleInput.value = `${value}%`;
 };
 
 const onSmallerButtonClick = () => {

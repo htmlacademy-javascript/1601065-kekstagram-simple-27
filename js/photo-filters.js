@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 const slider = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const imgContainer = document.querySelector('.img-upload__preview');
@@ -122,11 +123,7 @@ effectsList.addEventListener('change', (evt) => {
       });
     }
 
-    if (evt.target.value === 'none') {
-      sliderContainer.style.display = 'none';
-    } else {
-      sliderContainer.style.display = 'block';
-    }
+    evt.target.value === 'none' ? sliderContainer.style.display = 'none' : sliderContainer.style.display = 'block';
   }
 });
 
