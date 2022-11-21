@@ -111,7 +111,7 @@ function getErrorMesage() {
   });
 }
 
-const photoFormSubmit = (onSuccess) => {
+const submitPhotoForm = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -135,4 +135,4 @@ const photoFormSubmit = (onSuccess) => {
   });
 };
 
-export { photoFormSubmit, getErrorMesage, pristine };
+export { submitPhotoForm, getErrorMesage, pristine };

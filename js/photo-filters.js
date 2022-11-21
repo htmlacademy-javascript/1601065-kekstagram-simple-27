@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 const slider = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const imgContainer = document.querySelector('.img-upload__preview');
@@ -31,37 +30,31 @@ noUiSlider.create(slider, {
   },
 });
 
+slider.noUiSlider.on('update', () => {
+  sliderValue.value = slider.noUiSlider.get();
 
-effectsList.addEventListener('change', (evt) => {
-  slider.noUiSlider.on('update', () => {
-    sliderValue.value = slider.noUiSlider.get();
+  if (effectsInputRadio[1].checked) {
+    img.style.filter = `grayscale(${sliderValue.value})`;
+  }
 
-    if (effectsInputRadio[0].checked) {
-      effectsList.style.removeProperty('filter');
-    }
+  if (effectsInputRadio[2].checked) {
+    img.style.filter = `sepia(${sliderValue.value})`;
+  }
 
-    if (effectsInputRadio[1].checked) {
-      img.style.filter = `grayscale(${sliderValue.value})`;
-    }
+  if (effectsInputRadio[3].checked) {
+    img.style.filter = `invert(${sliderValue.value}%)`;
+  }
 
-    if (effectsInputRadio[2].checked) {
-      img.style.filter = `sepia(${sliderValue.value})`;
-    }
+  if (effectsInputRadio[4].checked) {
+    img.style.filter = `blur(${sliderValue.value}px)`;
+  }
 
-    if (effectsInputRadio[3].checked) {
-      img.style.filter = `invert(${sliderValue.value}%)`;
-    }
+  if (effectsInputRadio[5].checked) {
+    img.style.filter = `brightness(${sliderValue.value})`;
+  }
+});
 
-    if (effectsInputRadio[4].checked) {
-      img.style.filter = `blur(${sliderValue.value}px)`;
-    }
-
-    if (effectsInputRadio[5].checked) {
-      img.style.filter = `brightness(${sliderValue.value})`;
-    }
-
-  });
-
+const onEffectChange = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     img.removeAttribute('class');
     img.style.removeProperty('filter');
@@ -123,8 +116,11 @@ effectsList.addEventListener('change', (evt) => {
       });
     }
 
-    evt.target.value === 'none' ? sliderContainer.style.display = 'none' : sliderContainer.style.display = 'block';
+    sliderContainer.style.display = evt.target.value === 'none' ? 'none' : 'block';
   }
-});
+};
+
+effectsList.addEventListener('change', onEffectChange);
+
 
 export{slider, sliderContainer};
