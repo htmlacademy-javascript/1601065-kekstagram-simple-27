@@ -1,5 +1,5 @@
-import { isEscapeKey } from './util.js';
 import { sliderContainer } from './photo-filters.js';
+import { pristine } from './validity-sending.js';
 
 const fileInputElement = document.querySelector('.img-upload__input');
 const modalImgElement = document.querySelector('.img-upload__overlay');
@@ -11,9 +11,10 @@ const sliderContainerElement = document.querySelector('.effect-level');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
 const textDescriptionElement = document.querySelector('.text__description');
 const scaleValueText = scaleValueElement.value;
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
-function closeModalEscKeydown (evt) {
+function onModalCloseEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();
@@ -31,7 +32,7 @@ function openModal () {
   modalImgElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  document.addEventListener('keydown', closeModalEscKeydown);
+  document.addEventListener('keydown', onModalCloseEscKeydown);
   document.addEventListener('click', closeModalDocument);
   sliderContainer.style.display = 'none';
 }
@@ -49,7 +50,7 @@ hideModalElement.addEventListener('click', (evt) => {
 function closeModal () {
   document.body.classList.remove('modal-open');
   modalImgElement.classList.add('hidden');
-  document.removeEventListener('keydown', closeModalEscKeydown);
+  document.removeEventListener('keydown', onModalCloseEscKeydown);
   document.removeEventListener('click', closeModalDocument);
 
   textDescriptionElement.value = '';
@@ -60,7 +61,8 @@ function closeModal () {
   effectLevelValueElement.value = '';
   sliderContainerElement.hidden = true;
   previewEffectsInputElement[0].checked = true;
+  pristine.reset();
 }
 
 
-export { closeModal, openModal, closeModalEscKeydown, isEscapeKey };
+export { closeModal, openModal, onModalCloseEscKeydown, isEscapeKey };

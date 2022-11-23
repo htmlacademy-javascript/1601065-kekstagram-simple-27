@@ -1,6 +1,6 @@
-import { closeModalEscKeydown } from './form-img.js';
+import { onModalCloseEscKeydown } from './form-img.js';
 import { sendData } from './server.js';
-import { isEscapeKey } from './util.js';
+import { isEscapeKey } from './form-img.js';
 const formElement = document.getElementById('upload-select-image');
 const buttonSubmitElement = document.querySelector('.img-upload__submit');
 const messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
@@ -24,7 +24,7 @@ const unblockSubmitButton = () => {
   buttonSubmitElement.textContent = 'Опубликовать';
 };
 
-function getSuccessMesage() {
+function showSuccessMesage() {
   const fragment = new DocumentFragment();
   const clonedMessageSuccessTemplate = messageSuccessTemplateElement.cloneNode(true);
   fragment.append(clonedMessageSuccessTemplate);
@@ -33,41 +33,41 @@ function getSuccessMesage() {
   const successElement = document.querySelector('.success');
   const btnCloseSuccessElement = successElement.querySelector('.success__button');
 
-  const onMesageEscKeydown = (evt) => {
+  const onDocumentEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       successElement.remove();
 
-      document.removeEventListener('keydown', onMesageEscKeydown);
-      document.removeEventListener('click', onMesageDocument);
+      document.removeEventListener('keydown', onDocumentEscKeydown);
+      document.removeEventListener('click', onDocumentClick);
     }
   };
 
-  document.addEventListener('keydown', onMesageEscKeydown);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 
-  function onMesageDocument (evt) {
+  function onDocumentClick (evt) {
     if (evt.target === successElement) {
       evt.preventDefault();
       successElement.remove();
 
-      document.removeEventListener('keydown', onMesageEscKeydown);
-      document.removeEventListener('click', onMesageDocument);
+      document.removeEventListener('keydown', onDocumentEscKeydown);
+      document.removeEventListener('click', onDocumentClick);
     }
   }
 
-  document.addEventListener('click', onMesageDocument);
+  document.addEventListener('click', onDocumentClick);
 
   btnCloseSuccessElement.addEventListener('click', (evt) => {
     evt.preventDefault();
     successElement.remove();
-    document.removeEventListener('keydown', onMesageEscKeydown);
-    document.removeEventListener('click', onMesageDocument);
+    document.removeEventListener('keydown', onDocumentEscKeydown);
+    document.removeEventListener('click', onDocumentClick);
   });
 }
 
 
 function getErrorMesage() {
-  document.removeEventListener('keydown', closeModalEscKeydown);
+  document.removeEventListener('keydown', onModalCloseEscKeydown);
 
   const fragment = new DocumentFragment();
   const clonedMessageErrorTemplate = messageErrorTemplateElement.cloneNode(true);
@@ -77,41 +77,42 @@ function getErrorMesage() {
   const errorElement = document.querySelector('.error');
   const btnCloseErrorElement = errorElement.querySelector('.error__button');
 
-  const onMesageEscKeydown = (evt) => {
+  const onDocumentEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       errorElement.remove();
 
-      document.removeEventListener('keydown', onMesageEscKeydown);
+      document.removeEventListener('keydown', onDocumentEscKeydown);
 
-      document.removeEventListener('click', onMesageDocument);
-      document.addEventListener('keydown', closeModalEscKeydown);
+      document.removeEventListener('click', onDocumentClick);
+      document.addEventListener('keydown', onModalCloseEscKeydown);
     }
   };
-  document.addEventListener('keydown', onMesageEscKeydown);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 
-  function onMesageDocument (evt) {
+  function documentClose () {
+
+    errorElement.remove();
+    document.removeEventListener('keydown', onDocumentEscKeydown);
+    document.removeEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onModalCloseEscKeydown);
+  }
+  function onDocumentClick (evt) {
     if (evt.target === errorElement) {
       evt.preventDefault();
-      errorElement.remove();
-      document.removeEventListener('keydown', onMesageEscKeydown);
-      document.removeEventListener('click', onMesageDocument);
-      document.addEventListener('keydown', closeModalEscKeydown);
+      documentClose();
     }
   }
 
-  document.addEventListener('click', onMesageDocument);
+  document.addEventListener('click', onDocumentClick);
 
   btnCloseErrorElement.addEventListener('click', (evt) => {
     evt.preventDefault();
-    errorElement.remove();
-    document.removeEventListener('keydown', onMesageEscKeydown);
-    document.removeEventListener('click', onMesageDocument);
-    document.addEventListener('keydown', closeModalEscKeydown);
+    documentClose();
   });
 }
 
-const setPhotoFormSubmit = (onSuccess) => {
+const submitPhotoForm = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -123,7 +124,7 @@ const setPhotoFormSubmit = (onSuccess) => {
         () => {
           onSuccess();
           unblockSubmitButton();
-          getSuccessMesage();
+          showSuccessMesage();
         },
         () => {
           getErrorMesage();
@@ -135,4 +136,4 @@ const setPhotoFormSubmit = (onSuccess) => {
   });
 };
 
-export { setPhotoFormSubmit, getErrorMesage };
+export { submitPhotoForm, getErrorMesage, pristine };
