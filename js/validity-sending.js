@@ -90,13 +90,17 @@ function getErrorMesage() {
   };
   document.addEventListener('keydown', onDocumentEscKeydown);
 
+  function documentClose () {
+
+    errorElement.remove();
+    document.removeEventListener('keydown', onDocumentEscKeydown);
+    document.removeEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onModalCloseEscKeydown);
+  }
   function onDocumentClick (evt) {
     if (evt.target === errorElement) {
       evt.preventDefault();
-      errorElement.remove();
-      document.removeEventListener('keydown', onDocumentEscKeydown);
-      document.removeEventListener('click', onDocumentClick);
-      document.addEventListener('keydown', onModalCloseEscKeydown);
+      documentClose();
     }
   }
 
@@ -104,10 +108,7 @@ function getErrorMesage() {
 
   btnCloseErrorElement.addEventListener('click', (evt) => {
     evt.preventDefault();
-    errorElement.remove();
-    document.removeEventListener('keydown', onDocumentEscKeydown);
-    document.removeEventListener('click', onDocumentClick);
-    document.addEventListener('keydown', onModalCloseEscKeydown);
+    documentClose();
   });
 }
 

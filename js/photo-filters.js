@@ -1,126 +1,120 @@
 const slider = document.querySelector('.effect-level__slider');
-const sliderValue = document.querySelector('.effect-level__value');
-const imgContainer = document.querySelector('.img-upload__preview');
-const img = imgContainer.querySelector('img');
-const effectsList = document.querySelector('.effects__list');
-const effectsInputRadio = effectsList.querySelectorAll('input[type="radio"]');
+const imagePreview = document.querySelector('.img-upload__preview img');
+const form = document.querySelector('.img-upload__form');
+const sliderEffect = document.querySelector('.effect-level__slider');
+const sliderEffectValue = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 
-sliderValue.value = 100;
-sliderContainer.style.display = 'none';
 
-noUiSlider.create(slider, {
-  range: {
+const EFFECTS = [
+  {
+    name: 'none',
     min: 0,
     max: 100,
+    step: 1
   },
-  start: 100,
-  step: 1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+  {
+    name: 'chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
   },
-});
-
-slider.noUiSlider.on('update', () => {
-  sliderValue.value = slider.noUiSlider.get();
-
-  if (effectsInputRadio[1].checked) {
-    img.style.filter = `grayscale(${sliderValue.value})`;
+  {
+    name: 'sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  {
+    name: 'marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  {
+    name: 'phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  {
+    name: 'heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
   }
+];
 
-  if (effectsInputRadio[2].checked) {
-    img.style.filter = `sepia(${sliderValue.value})`;
-  }
+const EFFECT_DAFAULT = EFFECTS[0];
+let chosenEffect = EFFECT_DAFAULT;
 
-  if (effectsInputRadio[3].checked) {
-    img.style.filter = `invert(${sliderValue.value}%)`;
-  }
+const isDefault = () => chosenEffect === EFFECT_DAFAULT;
 
-  if (effectsInputRadio[4].checked) {
-    img.style.filter = `blur(${sliderValue.value}px)`;
-  }
-
-  if (effectsInputRadio[5].checked) {
-    img.style.filter = `brightness(${sliderValue.value})`;
-  }
-});
-
-const onEffectChange = (evt) => {
-  if (evt.target.matches('input[type="radio"]')) {
-    img.removeAttribute('class');
-    img.style.removeProperty('filter');
-    const classImg = `effects__preview--${evt.target.value}`;
-    img.classList.add(classImg);
-
-    if (evt.target.value === 'chrome') {
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1,
-      });
-    }
-
-    if (evt.target.value === 'sepia') {
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1,
-      });
-    }
-
-    if (evt.target.value === 'marvin') {
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 100,
-        },
-        start: 100,
-        step: 1,
-      });
-    }
-
-    if (evt.target.value === 'phobos') {
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1,
-      });
-    }
-
-    if (evt.target.value === 'heat') {
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1,
-      });
-    }
-
-    sliderContainer.style.display = evt.target.value === 'none' ? 'none' : 'block';
+const updateSlider = () => {
+  sliderEffect.classList.remove('hidden');
+  sliderContainer.style.display = 'block';
+  sliderEffect.noUiSlider.updateOptions ({
+    range: {
+      min: chosenEffect.min,
+      max: chosenEffect.max
+    },
+    step: chosenEffect.step,
+    start: chosenEffect.max
+  });
+  if (isDefault()) {
+    sliderEffect.classList.add('hidden');
+    sliderContainer.style.display = 'none';
   }
 };
 
-effectsList.addEventListener('change', onEffectChange);
+const onFormChange = (evt) => {
+  if (!evt.target.classList.contains('effects__radio')) {
+    return;
+  }
+  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  updateSlider();
+};
 
+const onSliderUpdate = () => {
+  imagePreview.style.filter = 'none';
+  imagePreview.className = '';
+  sliderEffectValue.value = '';
+  if (isDefault()) {
+    return;
+  }
+  const sliderValue = sliderEffect.noUiSlider.get();
+  imagePreview.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  imagePreview.classList.add(`effects__preview--${chosenEffect.name}`);
+  sliderEffectValue.value = sliderValue;
+};
 
-export{slider, sliderContainer};
+const resetEffect = () => {
+  chosenEffect = EFFECT_DAFAULT;
+  updateSlider();
+};
+
+noUiSlider.create(sliderEffect, {
+  range: {
+    min: EFFECT_DAFAULT.min,
+    max:EFFECT_DAFAULT.max
+  },
+  start: EFFECT_DAFAULT.max,
+  step: EFFECT_DAFAULT.step,
+  connect: 'lower'
+});
+updateSlider();
+
+form.addEventListener('change', onFormChange);
+sliderEffect.noUiSlider.on('update', onSliderUpdate);
+
+export{resetEffect, slider, sliderContainer};
