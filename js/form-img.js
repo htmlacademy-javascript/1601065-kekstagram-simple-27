@@ -14,14 +14,14 @@ const scaleValueText = scaleValueElement.value;
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
-function onModalCloseEscKeydown (evt) {
+function onModalCloseKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModal();
   }
 }
 
-function closeModalDocument (evt) {
+function onDocumentClick (evt) {
   if (evt.target === modalImgElement) {
     evt.preventDefault();
     closeModal();
@@ -32,8 +32,8 @@ function openModal () {
   modalImgElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  document.addEventListener('keydown', onModalCloseEscKeydown);
-  document.addEventListener('click', closeModalDocument);
+  document.addEventListener('keydown', onModalCloseKeydown);
+  document.addEventListener('click', onDocumentClick);
   sliderContainer.style.display = 'none';
 }
 
@@ -50,8 +50,8 @@ hideModalElement.addEventListener('click', (evt) => {
 function closeModal () {
   document.body.classList.remove('modal-open');
   modalImgElement.classList.add('hidden');
-  document.removeEventListener('keydown', onModalCloseEscKeydown);
-  document.removeEventListener('click', closeModalDocument);
+  document.removeEventListener('keydown', onModalCloseKeydown);
+  document.removeEventListener('click', onDocumentClick);
 
   textDescriptionElement.value = '';
   fileInputElement.value = '';
@@ -65,4 +65,4 @@ function closeModal () {
 }
 
 
-export { closeModal, openModal, onModalCloseEscKeydown, isEscapeKey };
+export { closeModal, openModal, onModalCloseKeydown, isEscapeKey };

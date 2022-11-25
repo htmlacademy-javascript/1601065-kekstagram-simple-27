@@ -1,4 +1,4 @@
-import { onModalCloseEscKeydown } from './form-img.js';
+import { onModalCloseKeydown } from './form-img.js';
 import { sendData } from './server.js';
 import { isEscapeKey } from './form-img.js';
 const formElement = document.getElementById('upload-select-image');
@@ -33,24 +33,22 @@ function showSuccessMesage() {
   const successElement = document.querySelector('.success');
   const btnCloseSuccessElement = successElement.querySelector('.success__button');
 
-  const onDocumentEscKeydown = (evt) => {
+  const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       successElement.remove();
 
-      document.removeEventListener('keydown', onDocumentEscKeydown);
-      document.removeEventListener('click', onDocumentClick);
+      document.removeEventListener('keydown', onDocumentKeydown);
     }
   };
 
-  document.addEventListener('keydown', onDocumentEscKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 
   function onDocumentClick (evt) {
     if (evt.target === successElement) {
       evt.preventDefault();
       successElement.remove();
 
-      document.removeEventListener('keydown', onDocumentEscKeydown);
       document.removeEventListener('click', onDocumentClick);
     }
   }
@@ -60,14 +58,14 @@ function showSuccessMesage() {
   btnCloseSuccessElement.addEventListener('click', (evt) => {
     evt.preventDefault();
     successElement.remove();
-    document.removeEventListener('keydown', onDocumentEscKeydown);
+    document.removeEventListener('keydown', onDocumentKeydown);
     document.removeEventListener('click', onDocumentClick);
   });
 }
 
 
-function getErrorMesage() {
-  document.removeEventListener('keydown', onModalCloseEscKeydown);
+function showErrorMessage() {
+  document.removeEventListener('keydown', onModalCloseKeydown);
 
   const fragment = new DocumentFragment();
   const clonedMessageErrorTemplate = messageErrorTemplateElement.cloneNode(true);
@@ -77,30 +75,27 @@ function getErrorMesage() {
   const errorElement = document.querySelector('.error');
   const btnCloseErrorElement = errorElement.querySelector('.error__button');
 
-  const onDocumentEscKeydown = (evt) => {
+
+  const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       errorElement.remove();
-
-      document.removeEventListener('keydown', onDocumentEscKeydown);
-
-      document.removeEventListener('click', onDocumentClick);
-      document.addEventListener('keydown', onModalCloseEscKeydown);
+      document.removeEventListener('keydown', onDocumentKeydown);
+      document.addEventListener('keydown', onModalCloseKeydown);
     }
   };
-  document.addEventListener('keydown', onDocumentEscKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 
-  function documentClose () {
-
+  function closeErrorMessage () {
     errorElement.remove();
-    document.removeEventListener('keydown', onDocumentEscKeydown);
     document.removeEventListener('click', onDocumentClick);
-    document.addEventListener('keydown', onModalCloseEscKeydown);
   }
+
   function onDocumentClick (evt) {
     if (evt.target === errorElement) {
       evt.preventDefault();
-      documentClose();
+      closeErrorMessage ();
+      onDocumentKeydown();
     }
   }
 
@@ -108,11 +103,13 @@ function getErrorMesage() {
 
   btnCloseErrorElement.addEventListener('click', (evt) => {
     evt.preventDefault();
-    documentClose();
+    closeErrorMessage ();
+    onDocumentKeydown();
+
   });
 }
 
-const submitPhotoForm = (onSuccess) => {
+const setUserFormSubmit = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -127,7 +124,7 @@ const submitPhotoForm = (onSuccess) => {
           showSuccessMesage();
         },
         () => {
-          getErrorMesage();
+          showErrorMessage();
           unblockSubmitButton();
         },
         new FormData(evt.target),
@@ -136,4 +133,4 @@ const submitPhotoForm = (onSuccess) => {
   });
 };
 
-export { submitPhotoForm, getErrorMesage, pristine };
+export { setUserFormSubmit, showErrorMessage, pristine };
